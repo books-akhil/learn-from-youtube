@@ -9,17 +9,17 @@
 
 ## Knowledge
 
-- [Book: _The Science and Practice of Strength Training_ — Zatsiorsky & Kraemer](https://example.com)
-  Foundational text on programming and adaptation. Use for: anything to do with periodisation, recovery, intensity zones.
-- [Article: "How Much Should I Train?" — Greg Nuckols (Stronger By Science)](https://example.com)
-  Evidence-based review of volume landmarks. Use for: weekly set targets per muscle group.
+- [Book: _Speech and Language Processing_ (3rd ed. draft) — Jurafsky & Martin](https://web.stanford.edu/~jurafsky/slp3/)
+  Foundational NLP text, freely available. Use for: attention, transformer, and decoding chapters backing the CME295 lectures.
+- [Article: "The Annotated Transformer" — Harvard NLP](https://nlp.seas.harvard.edu/annotated-transformer/)
+  Line-by-line implementation of the original paper. Use for: cross-checking lesson implementations against a trusted reference.
 
 ## Wisdom (Communities)
 
-- [r/weightroom](https://reddit.com/r/weightroom)
-  High-signal subreddit, moderated against bro-science. Use for: programme critique, plateau troubleshooting.
-- Local: Tuesday strength class at {gym name}
-  Use for: real-time coaching feedback on lifts.
+- [r/MachineLearning](https://reddit.com/r/MachineLearning)
+  High-signal subreddit with paper discussion threads. Use for: implementation critique, sanity-checking intuitions.
+- Local: {university} ML reading group, Thursdays
+  Use for: presenting derivations and getting real-time feedback.
 ```
 
 ## Rules

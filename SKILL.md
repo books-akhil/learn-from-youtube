@@ -1,12 +1,15 @@
 ---
 name: learn-from-youtube
-description: Turn YouTube videos or playlists into interactive marimo lesson notebooks, taught as a stateful tutor with persistent learning records. Use when the user wants to learn a subject from video lectures, study a YouTube course or playlist, or continue lessons in an existing teaching workspace. Optionally provide a 'Topic'; if omitted, the next lesson is inferred from the course document and the user's zone of proximal development.
+description: Turn YouTube videos or playlists into interactive marimo lesson notebooks, taught as a stateful tutor with persistent learning records. Designed for technical and quantitative subjects (math, ML, physics, programming) taught through code. Use when the user wants to learn such a subject from video lectures, study a YouTube course or playlist, or continue lessons in an existing teaching workspace. Optionally provide a 'Topic'; if omitted, the next lesson is inferred from the course document and the user's zone of proximal development.
+argument-hint: [topic]
 disable-model-invocation: true
 ---
 
 ## Quick Start
 
 First time: create a workspace directory, drop video/playlist links into `YOUTUBE.md` (just a URL and a one-line why each), invoke this skill from that directory, and answer the mission questions. Every later session: invoke the skill again from the same directory (optionally with a Topic) — it resumes from the workspace state.
+
+**Prerequisites**: [uv](https://docs.astral.sh/uv/) on PATH (`uv`, `uvx`) and network access — video metadata and captions are fetched with `uvx yt-dlp`.
 
 ## Two Directories
 
@@ -25,15 +28,15 @@ This skill separates its machinery from the learning state:
 - `YOUTUBE.md`: Video study queue — videos/playlists to learn from, with processing status. Format: [references/YOUTUBE-FORMAT.md](./references/YOUTUBE-FORMAT.md).
 - `./blueprints/*.md`: Cached lecture blueprints extracted from videos, one per video id. Format & pipeline: [references/BLUEPRINT-FORMAT.md](./references/BLUEPRINT-FORMAT.md).
 - `./learning-records/*.md`: Architectural decision records for learning. Format: [references/LEARNING-RECORD-FORMAT.md](./references/LEARNING-RECORD-FORMAT.md).
-- `./lessons/*.py`: The **lessons** (marimo notebooks) — "lesson" and "notebook" refer to the same artifact throughout this skill. **Naming**: Match course syllabus numbering (`Part 1.1` → `0101-<name>.py`).
+- `./lessons/*.py`: The **lessons** (marimo notebooks) — "lesson" and "notebook" refer to the same artifact throughout this skill. **Naming**: Match course syllabus numbering (`Part 1.1` → `0101-<name>.py`). If the course document has no Part numbering (e.g. a fast-path blueprint course), number sequentially: `0001-<name>.py`, `0002-<name>.py`.
 - `pyproject.toml` + `uv.lock`: The uv project manifest — the single source of truth for lesson dependencies. Managed exclusively via `uv add` / `uv remove`, never edited by hand.
 
-**Missing-file rule**: If any workspace file other than `MISSION.md`, `NOTES.md`, and `pyproject.toml` is missing, skip it and continue — Step 0 bootstraps those three, the rest are created lazily by Step 4.
+**Missing-file rule**: If any workspace file other than `MISSION.md`, `NOTES.md`, and `pyproject.toml` is missing, skip it and continue — Step 0 bootstraps those three, the rest are created lazily by later steps (course document and blueprints in Steps 2–3; records, index, glossary, and resources in Step 4). `YOUTUBE.md` is created by the user, never by the skill.
 
 ## Step 0 — Bootstrap
 
 1. If `MISSION.md` does not exist:
-   - If `YOUTUBE.md` exists, first fetch cheap metadata for its entries — titles, descriptions, chapter lists (`uvx yt-dlp --flat-playlist --print "%(playlist_index)s|%(id)s|%(title)s" <playlist-url>` for playlists; `uvx yt-dlp --skip-download --print "%(title)s\n%(description)s" <url>` for single videos). **No captions, no blueprints yet.**
+   - If `YOUTUBE.md` exists, first fetch cheap metadata for its entries — titles, descriptions, chapter lists. For playlists use the expansion command in [references/YOUTUBE-FORMAT.md](./references/YOUTUBE-FORMAT.md); for single videos: `uvx yt-dlp --skip-download --print "%(title)s\n%(description)s" <url>`. **No captions, no blueprints yet.**
    - Interview the user to create `MISSION.md`, grounding the questions in what the videos cover ("this playlist spans X→Y — which parts matter to you, and why?"). Format: [references/MISSION-FORMAT.md](./references/MISSION-FORMAT.md). Do not proceed until `MISSION.md` exists. **Fast path**: if the queue is a single video with an obvious topic, cap the interview at 2–3 questions — a few-line mission beats a stalled start.
 2. If `pyproject.toml` does not exist, make the workspace uv-managed: run `uv init` (delete any sample `main.py` it generates), then `uv add marimo` as the baseline dependency. All further dependencies are added in Step 2 — do not guess frameworks here.
 3. If `NOTES.md` does not exist, instantiate it from [references/NOTES-TEMPLATE.md](./references/NOTES-TEMPLATE.md).
@@ -49,7 +52,7 @@ This skill separates its machinery from the learning state:
   1. **Knowledge Subagent**: Spawn a subagent to read `LEARNING-INDEX.yaml` and the requested **Topic**. It must locate the specific records for that topic, read only those files in `./learning-records/`, and return a condensed "Knowledge Brief". *Failure Handling*: If a record is missing/empty, ignore it but report it for pruning. If the index is unparseable, warn the user but proceed with zero prior knowledge.
   2. **Resource Subagent**: Only if `RESOURCES.md` exceeds ~100 lines, spawn a subagent to read it plus the **Topic** and return a condensed "Resource Brief" of applicable links/materials. Otherwise read it directly.
 
-**Synthesis**: You (the main agent) read `MISSION.md`, `NOTES.md`, `GLOSSARY.md` (workspace), and `SKILL-RETROSPECT.md` (skill directory), and synthesize them with the gathered context. Synthesis is complete when you have a unified context ready for course resolution.
+**Synthesis**: You (the main agent) read `MISSION.md`, `NOTES.md`, `GLOSSARY.md` (workspace), and `SKILL-RETROSPECT.md` (check both the skill directory and the fallback location per [references/RETROSPECT-FORMAT.md](./references/RETROSPECT-FORMAT.md)), and synthesize them with the gathered context. Synthesis is complete when you have a unified context ready for course resolution.
 
 ## Step 2 — Resolve Course & Dependencies
 

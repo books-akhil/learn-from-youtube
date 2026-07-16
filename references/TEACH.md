@@ -3,7 +3,7 @@
 Read and apply these rules when generating a notebook. The router (SKILL.md) resolves the course document and workspace state before invoking this file.
 
 ## Prerequisites
-- Write the notebook in marimo's file format: a pure-Python file with `import marimo`, `app = marimo.App()`, one `@app.cell`-decorated function per cell, and `if __name__ == "__main__": app.run()` — verify it executes with `uv run`. If a skill named `marimo-notebook` is available in this session, invoke it first and follow its guidance instead.
+- Write the notebook in marimo's file format: a pure-Python file with `import marimo`, `app = marimo.App()`, one `@app.cell`-decorated function per cell, and `if __name__ == "__main__": app.run()` — verify it executes with `uv run`. If a skill named `marimo-notebook` is available in this session, invoke it and follow its file-format guidance in place of this bullet; the rest of this document still applies.
 
 ## Philosophy
 - **System 2 Exercise**: Start with raw tensor/array implementations from first principles. Introduce high-level library abstractions only as a reward.
