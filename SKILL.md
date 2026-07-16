@@ -25,7 +25,7 @@ This skill separates its machinery from the learning state:
 - `YOUTUBE.md`: Video study queue — videos/playlists to learn from, with processing status. Format: [references/YOUTUBE-FORMAT.md](./references/YOUTUBE-FORMAT.md).
 - `./blueprints/*.md`: Cached lecture blueprints extracted from videos, one per video id. Format & pipeline: [references/BLUEPRINT-FORMAT.md](./references/BLUEPRINT-FORMAT.md).
 - `./learning-records/*.md`: Architectural decision records for learning. Format: [references/LEARNING-RECORD-FORMAT.md](./references/LEARNING-RECORD-FORMAT.md).
-- `./lessons/*.py`: The **lessons** (marimo notebooks). **Naming**: Match course syllabus numbering (`Part 1.1` → `0101-<name>.py`).
+- `./lessons/*.py`: The **lessons** (marimo notebooks) — "lesson" and "notebook" refer to the same artifact throughout this skill. **Naming**: Match course syllabus numbering (`Part 1.1` → `0101-<name>.py`).
 - `pyproject.toml` + `uv.lock`: The uv project manifest — the single source of truth for lesson dependencies. Managed exclusively via `uv add` / `uv remove`, never edited by hand.
 
 **Missing-file rule**: If any workspace file other than `MISSION.md`, `NOTES.md`, and `pyproject.toml` is missing, skip it and continue — Step 0 bootstraps those three, the rest are created lazily by Step 4.
