@@ -3,7 +3,7 @@
 Read and apply these rules when generating a notebook. The router (SKILL.md) resolves the course document and workspace state before invoking this file.
 
 ## Prerequisites
-- **Read `marimo-notebook skill`** to create interactive marimo `.py` notebooks. If that skill is unavailable, write the notebook directly in marimo's file format: a pure-Python file with `import marimo`, `app = marimo.App()`, one `@app.cell`-decorated function per cell, and `if __name__ == "__main__": app.run()` — verify it executes with `uv run`.
+- Write the notebook in marimo's file format: a pure-Python file with `import marimo`, `app = marimo.App()`, one `@app.cell`-decorated function per cell, and `if __name__ == "__main__": app.run()` — verify it executes with `uv run`. If a skill named `marimo-notebook` is available in this session, invoke it first and follow its guidance instead.
 
 ## Philosophy
 - **System 2 Exercise**: Start with raw tensor/array implementations from first principles. Introduce high-level library abstractions only as a reward.
@@ -11,7 +11,14 @@ Read and apply these rules when generating a notebook. The router (SKILL.md) res
 - **Reactivity**: Expose every core hyperparameter as an interactive `mo.ui` widget wired directly into the computation.
 
 ## Execution Rules
-- **Course Architect**: Read the course document identified by the router and the **previous notebook**. If `YOUTUBE.md` maps a source video to the syllabus items in scope, also read that video's blueprint from `./blueprints/` — generate it first per `references/BLUEPRINT-FORMAT.md` if missing. If the course document flags a supplementary video for a concept in scope, blueprint only the relevant chapter/segment and treat it as an alternative view — the primary source's terminology and ordering always win. Identify the **starting concept** (the first syllabus item not covered by any existing lesson) and the **stopping concept** (the furthest syllabus item reachable within the lesson's cell budget — default 40; the course document may set a different budget per lesson). These two concepts define the notebook's scope. If no previous notebook exists (first lesson), begin at the start of the course document. Before naming the new notebook, scan `./lessons/` for existing filenames to prevent duplicate numbering. Completion criterion: The starting concept and the final stopping concept are stated, and the filename is unique in `./lessons/`.
+- **Course Architect**: Establish the notebook's scope before writing any cells:
+  1. Read the course document identified by the router and the **previous notebook**. If no previous notebook exists (first lesson), begin at the start of the course document.
+  2. If `YOUTUBE.md` maps a source video to the syllabus items in scope, also read that video's blueprint from `./blueprints/` — generate it first per `references/BLUEPRINT-FORMAT.md` if missing.
+  3. If the course document flags a supplementary video for a concept in scope, blueprint only the relevant chapter/segment and treat it as an alternative view — the primary source's terminology and ordering always win.
+  4. Identify the **starting concept** (the first syllabus item not covered by any existing lesson) and the **stopping concept** (the furthest syllabus item reachable within the lesson's cell budget — default 40; the course document may set a different budget per lesson). These two concepts define the notebook's scope.
+  5. Before naming the new notebook, scan `./lessons/` for existing filenames to prevent duplicate numbering.
+
+  Completion criterion: The starting concept and the final stopping concept are stated, and the filename is unique in `./lessons/`.
 - **Staged Epiphanies**: Scope 1–3 explicit AHA moments per notebook. An epiphany must feel like an unplanned surprise to the learner. To manufacture one:
   1. **Productive Failure (Dig Deep)**: Push the learner into a deliberate mathematical dead end that shatters their current intuition. A productive dead end is one where the learner's current tool provably fails for a reason that motivates the next tool.
   2. **Lateral Leap (Travel Sideways)**: Introduce an unexpected twist by importing a concept from `RESOURCES.md` or the course syllabus that has not yet been introduced in this notebook to re-frame the failure.
@@ -28,7 +35,7 @@ Read and apply these rules when generating a notebook. The router (SKILL.md) res
   2. **Walk (Logic)**: Define pure Python logic functions in one cell. Invoke on a hardcoded test input in the next.
   3. **Run (Interactive)**: Define `mo.ui` sliders in one cell. Drive the pure functions with loops/datasets and output the interactive plot in the next.
 
-## The Notebook Sequence (Default Budget: 35–40 Cells)
+## The Notebook Sequence (Default Budget: 40 Cells)
 
 Choose a track: if the lesson's core output is a **proof, derivation, or identity verification**, use Foundations. If the core output is a **trained model, fitted curve, or data pipeline**, use Applied. When ambiguous, prefer Foundations — it's easier to extend a derivation into application than to backfill missing theory.
 - **Applied Track**: For modeling and fitting. Features a naive attempt and manufactured failures.

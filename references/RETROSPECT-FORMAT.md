@@ -2,6 +2,8 @@
 
 `SKILL-RETROSPECT.md` lives in the **skill directory**, next to `SKILL.md` — not in the teaching workspace. It is the long-term memory of the skill itself — a record of friction patterns, reasoning mistakes, and design improvements discovered across teaching sessions. Because it is shared across all teaching workspaces, friction discovered while teaching one topic improves every future session.
 
+**Fallback location**: if the skill directory is not writable (e.g. the skill was installed via a plugin/marketplace, or upgrades would overwrite it), keep the file at `~/.claude/learn-from-youtube/SKILL-RETROSPECT.md` instead. Check both locations when reading; if both exist, the skill-directory copy is stale — merge it into the fallback and use the fallback from then on.
+
 It is **not** a conversation log, **not** a user preference file, and **not** a learner knowledge record.
 
 ## Structure

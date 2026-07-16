@@ -43,14 +43,14 @@ For acquiring knowledge, difficulty is the enemy. It eats working memory you nee
 
 If knowledge is all about acquisition, skills are about durability and flexibility. Make the knowledge stick.
 
-For skill acquisition, difficulty is the tool. Effortful retrieval is what builds storage strength. Skills should be taught through interactive lessons. There are several tools at your disposal:
+For skill acquisition, difficulty is the tool. Effortful retrieval is what builds storage strength. Skills are taught through the interactive lessons (marimo notebooks). Tools at your disposal inside a notebook:
 
-- Interactive lessons, using quizzes and light in-browser tasks
-- Lessons which guide the user through a list of real-world steps to take (for instance, yoga poses)
+- Exercises that ask the user to implement or predict something before the notebook reveals the answer
+- `mo.ui` widgets that let the user probe a concept by manipulating parameters and observing the result
 
-Each of these should be based on a **feedback loop**, where the user receives feedback on their performance. This feedback loop should be as tight as possible, giving feedback immediately - and ideally automatically.
+Each of these should be based on a **feedback loop**, where the user receives feedback on their performance. This feedback loop should be as tight as possible, giving feedback immediately - and ideally automatically (e.g. an assertion cell that checks the user's implementation against an analytical target).
 
-For quizzes, each answer should be exactly the same number of words (and characters, if possible). Don't give the user any clues about the answer through formatting.
+When posing multiple-choice checks, don't leak the answer through formatting - keep the options parallel in length and style.
 
 ## Acquiring Wisdom
 

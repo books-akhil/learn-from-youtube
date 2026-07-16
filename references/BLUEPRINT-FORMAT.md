@@ -8,8 +8,8 @@ A blueprint is a faithful, timestamped reconstruction of one video lecture, cach
 
 1. **Download captions + metadata** to a temporary directory (never the workspace):
    `uvx yt-dlp --skip-download --write-auto-subs --sub-lang en --sub-format vtt --write-info-json -o "<video-id>.%(ext)s" <url>`
-2. **Clean the VTT into a timestamped transcript** with the bundled script (path relative to the skill directory):
-   `python scripts/clean_vtt.py <video-id>.en.vtt 30 > transcript.txt`
+2. **Clean the VTT into a timestamped transcript** with the bundled script. The script lives in the skill directory, not the workspace — prefix the skill directory's absolute path:
+   `python <skill-dir>/scripts/clean_vtt.py <video-id>.en.vtt 30 > transcript.txt`
    It strips cue/position tags, deduplicates the rolling caption lines (auto-subs repeat each line across cues), and merges into ~30-second buckets prefixed `[MMM:SS]`.
 3. **Pull chapters and description** from the `.info.json`. Chapter markers anchor the outline's top level; the description often lists companion materials.
 4. **Write the blueprint** from transcript + chapters only. Record what *this lecture* teaches, in its own words and examples — do not substitute textbook-standard phrasings or examples the lecturer did not use. (Plausible-but-unsaid substitutions are the failure mode this format exists to prevent.)

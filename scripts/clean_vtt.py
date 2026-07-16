@@ -24,9 +24,10 @@ def main():
     cur = None
     with open(path, encoding="utf-8") as f:
         for ln in f.read().splitlines():
-            m = re.match(r"^(\d+):(\d+):(\d+)\.\d+ --> ", ln)
+            # WebVTT allows MM:SS.mmm cues (hours optional)
+            m = re.match(r"^(?:(\d+):)?(\d+):(\d+)\.\d+ --> ", ln)
             if m:
-                cur = int(m[1]) * 3600 + int(m[2]) * 60 + int(m[3])
+                cur = int(m[1] or 0) * 3600 + int(m[2]) * 60 + int(m[3])
                 continue
             if cur is None or not ln.strip():
                 continue
