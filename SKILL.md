@@ -43,7 +43,7 @@ This skill separates its machinery from the learning state:
 
 ## Step 1 — Resolve Topic & State
 
-**Topic**: Use the Topic the user provided. If none was given, infer one: read the course document (if any) and pick the next uncovered syllabus item within the user's zone of proximal development (see [references/PEDAGOGY.md](./references/PEDAGOGY.md)). State the inferred Topic to the user before proceeding.
+**Topic**: Use the Topic the user provided. If none was given, infer one: read the course document and pick the next uncovered syllabus item within the user's zone of proximal development (see [references/PEDAGOGY.md](./references/PEDAGOGY.md)). State the inferred Topic to the user before proceeding. If no course document exists yet (first run), skip inference — Step 2 designs the course, and the first lesson begins at its start.
 
 **Context gathering** — match the effort to the workspace's size:
 
@@ -86,4 +86,4 @@ After the notebook passes the Evaluation Gate in references/TEACH.md, execute th
 
 ## Step 5 — Done
 
-Report to the user: the notebook filename, concepts covered (start → stop), and any state files created or updated. Ask if they want to continue to the next lesson.
+Report to the user: the notebook filename, the command to open it interactively (`uv run marimo edit lessons/<file>.py` — plain `uv run lessons/<file>.py` only executes it as a script, without the `mo.ui` widgets), concepts covered (start → stop), and any state files created or updated. Ask if they want to continue to the next lesson.

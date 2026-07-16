@@ -1,7 +1,7 @@
 # User Teaching Preferences
 
 ## Environment
-- The workspace is **uv-managed**: execute notebooks with `uv run lessons/<notebook>.py`; dependencies live in `pyproject.toml` and are added only via `uv add` after user confirmation (see Step 2 of SKILL.md).
+- The workspace is **uv-managed**: verify notebooks by executing `uv run lessons/<notebook>.py`; the learner opens them interactively with `uv run marimo edit lessons/<notebook>.py`. Dependencies live in `pyproject.toml` and are added only via `uv add` after user confirmation (see Step 2 of SKILL.md).
 - [Note any non-defaults here: Python version pin, GPU/CUDA variants, extra index URLs]
 
 ## What to Teach
